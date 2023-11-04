@@ -28,7 +28,7 @@ body {
     border: 1px solid #dadde1;
     padding: 15px;
     margin: 20px auto;
-    border-radius: 10px;
+    border-radius: 20px;
     max-width: 600px;
   }
   
@@ -61,4 +61,11 @@ body {
 
   .active:hover { 
 text-decoration: none;
+  }
+
+  .weather-forecast-icon{
+    width: 80px;
+    height: 80px;
+    display: block;
+    margin: 0 auto;
   }
