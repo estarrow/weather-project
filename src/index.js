@@ -19,7 +19,9 @@ let iconElement = document.querySelector("#icon");
 iconElement.setAttribute("src",`https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`);
 iconElement.setAttribute("alt",response.data.weather[0].description);
 
+getForecast(response.data.city);
 }
+
 
 function searchCity(city) {
     let apiKey = "96ad27349a64ea1dcdfbe6f4d458c085";
@@ -35,7 +37,7 @@ function handleSubmit(event) {
 }
 
 function searchLocation(position) {
-     apiKey = "96ad27349a64ea1dcdfbe6f4d458c085";
+    let apiKey = "96ad27349a64ea1dcdfbe6f4d458c085";
     let apiUrl = "https://api.openweathermap.org/data/2.5/weather?lat=" + position.coords.latitude + "&lon=" + position.coords.longitude + "&appid=" + apiKey + "&units=metric";
 
     axios.get(apiUrl).then(displayWeatherCondition);
@@ -81,3 +83,42 @@ fahrenheitlink.addEventListener("click",convertToFahrenheitTemperature);
 
 let celsiuslink = document.querySelector("#celsius-link");
 celsiuslink.addEventListener("click",convertTocelsiusTemperature);
+
+
+function formatDay(timestamp) {
+    let date = new Date(timestamp * 1000);
+    let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+    return days[date.getDay()];
+}
+
+function displayforecast(response){ 
+
+let forecastHyml = ""; 
+
+response.data.daily.forEach(function (day, index) {
+    if (index < 5){
+    forecastHyml = forecastHyml +`
+<div class="weather-forecast-day">
+                <div class="weather-forecast-date">${formatDay(day.time)}</div>
+                <img src="${day.condition.icon_url}" class="weather-forecast-icon">/>
+                <div class="weather-forecasttemperatures">
+                    <div class="weather-forecast-temperature">
+                        <strong>${Math.round(day.temperature.maximum)}°</strong>
+                    </div>
+                    <div class="weather-forecast-temperature">
+                    ${Math.round(day.temperature.minimum)}°</div>
+                </div>
+            </div>
+`;
+    }
+});
+
+let forecastElement = document.querySelector("#forecast");
+forecastElement.innerHTML = forecastHyml;
+}
+function getForecast(city) {
+    let apiKey = "96ad27349a64ea1dcdfbe6f4d458c085";
+    let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apikey}&units=metric`;
+    axios(apiUrl).then(displayforecast);
+}
