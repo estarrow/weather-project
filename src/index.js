@@ -19,7 +19,7 @@ let iconElement = document.querySelector("#icon");
 iconElement.setAttribute("src",`https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`);
 iconElement.setAttribute("alt",response.data.weather[0].description);
 
-getForecast(response.data.city);
+getForecast(response.data.name);
 }
 
 
@@ -92,33 +92,34 @@ function formatDay(timestamp) {
     return days[date.getDay()];
 }
 
-function displayforecast(response){ 
-
-let forecastHyml = ""; 
-
-response.data.daily.forEach(function (day, index) {
-    if (index < 5){
-    forecastHyml = forecastHyml +`
-<div class="weather-forecast-day">
-                <div class="weather-forecast-date">${formatDay(day.time)}</div>
-                <img src="${day.condition.icon_url}" class="weather-forecast-icon">/>
-                <div class="weather-forecasttemperatures">
-                    <div class="weather-forecast-temperature">
-                        <strong>${Math.round(day.temperature.maximum)}°</strong>
-                    </div>
-                    <div class="weather-forecast-temperature">
-                    ${Math.round(day.temperature.minimum)}°</div>
-                </div>
-            </div>
-`;
-    }
-});
-
-let forecastElement = document.querySelector("#forecast");
-forecastElement.innerHTML = forecastHyml;
-}
 function getForecast(city) {
     let apiKey = "96ad27349a64ea1dcdfbe6f4d458c085";
-    let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apikey}&units=metric`;
-    axios(apiUrl).then(displayforecast);
+    let apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`;
+   axios.get(apiUrl) .then(displayForecast);
+}
+
+function displayForecast(response){ 
+    let forecastHtml = ""; 
+
+    response.data.daily.forEach(function (day, index) {
+        if (index < 5){
+            forecastHtml = forecastHtml +`
+                <div class="weather-forecast-day">
+                    <div class="weather-forecast-date">${formatDay(day.time)}</div>
+                    <img src="${day.condition.icon_url}" class="weather-forecast-icon" />
+                    <div class="weather-forecast-temperatures">
+                        <div class="weather-forecast-temperature">
+                            <strong>${Math.round(day.temperature.maximum)}°</strong>
+                        </div>
+                        <div class="weather-forecast-temperature">
+                        ${Math.round(day.temperature.minimum)}°</div>
+                    </div>
+               </div>
+            `;
+        }
+    });
+
+    // update the forecast element here, once the forecastHtml string is complete
+    let forecastElement = document.querySelector("#forecast");
+    forecastElement.innerHTML = forecastHtml;
 }
