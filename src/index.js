@@ -94,32 +94,34 @@ function formatDay(timestamp) {
 
 function getForecast(city) {
     let apiKey = "96ad27349a64ea1dcdfbe6f4d458c085";
-    let apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`;
-   axios.get(apiUrl) .then(displayForecast);
+    let apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey + "&units=metric";
+   axios. get(apiUrl) .then(displayForecast);
 }
 
 function displayForecast(response){ 
+    console.log(response.data);
     let forecastHtml = ""; 
 
     response.data.daily.forEach(function (day, index) {
         if (index < 5){
-            forecastHtml = forecastHtml +`
+            forecastHtml = 
+            forecastHtml +
+            `
                 <div class="weather-forecast-day">
                     <div class="weather-forecast-date">${formatDay(day.time)}</div>
                     <img src="${day.condition.icon_url}" class="weather-forecast-icon" />
                     <div class="weather-forecast-temperatures">
                         <div class="weather-forecast-temperature">
-                            <strong>${Math.round(day.temperature.maximum)}°</strong>
+                            <strong>${Math.round(day.temperature.maximum)}º</strong>
                         </div>
                         <div class="weather-forecast-temperature">
-                        ${Math.round(day.temperature.minimum)}°</div>
+                        ${Math.round(day.temperature.minimum)}º</div>
                     </div>
                </div>
             `;
         }
     });
 
-    // update the forecast element here, once the forecastHtml string is complete
     let forecastElement = document.querySelector("#forecast");
     forecastElement.innerHTML = forecastHtml;
 }
