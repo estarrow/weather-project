@@ -1,13 +1,55 @@
 body {
     font-family: arial, sans-serif;
-   background-color: #2161a9;
+    background-image: linear-gradient(to right, rgba(118, 233, 241, 0), rgb(72, 0, 255));
   
-      
+  }
+  body {
+    --text-color: rgb(0, 0, 0);
+    --bkg-color:linear-gradient(to right, rgba(118, 233, 241, 0), rgb(72, 0, 255));
+  }
+  body.dark-theme {
+    --text-color: rgb(255, 255, 255);
+    --bkg-color:linear-gradient(to left, rgb(2, 2, 119), rgb(1, 10, 10));
   }
   
+  @media (prefers-color-scheme: dark) {
+
+    body {
+      --text-color: rgb(255, 254, 254);
+      --bkg-color:linear-gradient(to left, rgb(2, 2, 119), rgb(1, 10, 10));
+    }
+    body.light-theme {
+      --text-color: rgb(0, 0, 0);
+      --bkg-color:linear-gradient(to right, rgba(118, 233, 241, 0), rgb(72, 0, 255));
+    }
+  }
+  
+  * {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  body {
+    background: var(--bkg-color);
+  }
+  
+  h1,
+  p {
+    color: var(--text-color);
+  }
+ 
+
+  button{
+    border: 1px solid;
+    padding: 0px;
+    border-radius: 60px;
+     font-size: 13px;
+    background-color: #673AB7;
+    color:beige
+  }
+
   h1 {
-    color: #fde1d7;
-    font-size: 24px;
+    color: #200e07;
+    font-size: 34px;
     font-weight: 100;
     line-height: 28px;
     margin: 0;
@@ -16,9 +58,6 @@ body {
   ul {
     margin: 0 0 10px;
     padding: 0;
-Wind: 3 km/h
-°C
-   
     
   }
   
@@ -38,6 +77,7 @@ Wind: 3 km/h
     border-radius: 30px;
     max-width: 850px;
     background-color: #95afcd;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   
   }
   
@@ -78,4 +118,11 @@ text-decoration: none;
     height: 80px;
     display:  block ;
     margin: 0 auto;
+  }
+
+.weather-forecast{
+    display: flex;
+      justify-content: space-around;
+      margin-top: 30px;
+    color: rgb(14 15 43);
   }
