@@ -93,10 +93,11 @@ function formatDay(timestamp) {
 }
 
 function getForecast(city) {
-    let apiKey = "96ad27349a64ea1dcdfbe6f4d458c085";
-    let apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey + "&units=metric";
-   axios. get(apiUrl) .then(displayForecast);
-}
+    let apiKey = "bd79ao40tde3dec118ca46bc3e6dd55f";
+    let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}`;
+    console.log(apiUrl);
+    axios.get(apiUrl).then(displayForecast);
+  }
 
 function displayForecast(response){ 
     console.log(response.data);
@@ -125,3 +126,28 @@ function displayForecast(response){
     let forecastElement = document.querySelector("#forecast");
     forecastElement.innerHTML = forecastHtml;
 }
+
+const btn = document.querySelector(".btn-toggle");
+const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
+
+const currentTheme = localStorage.getItem("theme");
+if (currentTheme == "dark") {
+  document.body.classList.toggle("dark-theme");
+} else if (currentTheme == "light") {
+  document.body.classList.toggle("light-theme");
+}
+
+btn.addEventListener("click", function () {
+  if (prefersDarkScheme.matches) {
+    document.body.classList.toggle("light-theme");
+    var theme = document.body.classList.contains("light-theme")
+      ? "light"
+      : "dark";
+  } else {
+    document.body.classList.toggle("dark-theme");
+    var theme = document.body.classList.contains("dark-theme")
+      ? "dark"
+      : "light";
+  }
+  localStorage.setItem("theme", theme);
+});
